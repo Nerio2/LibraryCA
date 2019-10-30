@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="library" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=10.200.3.186;Initial Catalog=library;Persist Security Info=True;User ID=MsRoot" SettingsObjectName="Library.Properties.Settings" SettingsPropertyName="libraryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.authors" Member="authors">
+    <Type Name="authors">
+      <Column Name="authorId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(70)" CanBeNull="true" />
+      <Association Name="authors_books" Member="books" ThisKey="authorId" OtherKey="authorId" Type="books" />
+    </Type>
+  </Table>
+  <Table Name="dbo.books" Member="books">
+    <Type Name="books">
+      <Column Name="bookId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(90)" CanBeNull="true" />
+      <Column Name="pagecount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="point" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="authorId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="typeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="books_borrows" Member="borrows" ThisKey="bookId" OtherKey="bookId" Type="borrows" />
+      <Association Name="authors_books" Member="authors" ThisKey="authorId" OtherKey="authorId" Type="authors" IsForeignKey="true" />
+      <Association Name="types_books" Member="types" ThisKey="typeId" OtherKey="typeId" Type="types" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.borrows" Member="borrows">
+    <Type Name="borrows">
+      <Column Name="borrowId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="studentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bookId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="takenDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="broughtDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="books_borrows" Member="books" ThisKey="bookId" OtherKey="bookId" Type="books" IsForeignKey="true" />
+      <Association Name="students_borrows" Member="students" ThisKey="studentId" OtherKey="studentId" Type="students" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.students" Member="students">
+    <Type Name="students">
+      <Column Name="studentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="birthdate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="gender" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="class" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="point" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="students_borrows" Member="borrows" ThisKey="studentId" OtherKey="studentId" Type="borrows" />
+    </Type>
+  </Table>
+  <Table Name="dbo.types" Member="types">
+    <Type Name="types">
+      <Column Name="typeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="types_books" Member="books" ThisKey="typeId" OtherKey="typeId" Type="books" />
+    </Type>
+  </Table>
+</Database>
